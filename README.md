@@ -20,11 +20,10 @@ Threshold can be changed with `-t` option.
 <a id="org0c6d865"></a>
 
 # Requirements
-
-    findimagedupes
-    python
-    ffmpeg
-
+- findimagedupes (https://github.com/jhnc/findimagedupes)
+- python
+- ffmpeg
+    
 <a id="org35ea0c1"></a>
 
 # examples
