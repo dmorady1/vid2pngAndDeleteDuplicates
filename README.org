@@ -1,5 +1,31 @@
 #+TITLE: Readme
 
+* Description
+Creates pictures of a video file and delete duplicate in these pictures
+Can also be used for pictures only with option ~-w~  make sure to use the ~-P~ option to give the correct path to your files.
+
+
+
+* examples
+with video
+
+#+begin_src bash
+python vid2pngAndDeleteDuplicates.py -p myVideo.mp4
+#+end_src
+
+without video
+
+#+begin_src bash
+python vid2pngAndDeleteDuplicates -w -P PATH_OF_PICTURES
+#+end_src
+
+with threshold
+
+#+begin_src bash
+python vid2pngAndDeleteDuplicates.py -p myVideo.mp4 -t 90
+#+end_src
+
+help function
 
 #+begin_src bash
 usage: ./vid2pngAndDeleteDuplicates.py [-h] [-p pathOfVid]
@@ -17,16 +43,4 @@ optional arguments:
   -t THRESHOLD, --threshold THRESHOLD
                         threshold image similarity (100 means if exact the
                         same)
-#+end_src
-
-example
-
-#+begin_src bash
-python vid2pngAndDeleteDuplicates.py -p myVideo.mp4
-#+end_src
-
-without video
-
-#+begin_src bash
-python vid2pngAndDeleteDuplicates -w -P PATH_OF_PICTURES
 #+end_src
