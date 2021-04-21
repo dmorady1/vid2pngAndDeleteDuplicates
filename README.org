@@ -2,7 +2,8 @@
 
 * Description
 Creates pictures of a video file and delete duplicate in these pictures
-Can also be used for pictures only with option ~-w~  make sure to use the ~-P~ option to give the correct path to your files.
+Can also be used for pictures 
+only with option ~-w~  make sure to use the ~-P~ option to give the correct path to your files.
 
 
 * Requirements
