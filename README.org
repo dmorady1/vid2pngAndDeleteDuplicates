@@ -5,7 +5,8 @@ Creates pictures of a video file and delete duplicate in these pictures
 Can also be used for pictures 
 only with option ~-w~  make sure to use the ~-P~ option to give the correct path to your files.
 
-Threshold default is 95 for similiarity. (100 would mean exact the same)
+Default for Threshold for similarity is 95. (100 would mean exact the same pictures)
+Can be changed with ~-t~ option
 
 * Requirements
 
