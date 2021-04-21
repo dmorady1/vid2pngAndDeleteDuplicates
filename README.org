@@ -1,0 +1,32 @@
+#+TITLE: Readme
+
+
+#+begin_src bash
+usage: ./vid2pngAndDeleteDuplicates.py [-h] [-p pathOfVid]
+                                       [-P PATH_OF_PICTURES] [-w] [-s] [--dry]
+                                       [-t THRESHOLD]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -p pathOfVid, --path pathOfVid
+  -P PATH_OF_PICTURES, --path_of_pictures PATH_OF_PICTURES
+  -w, --without_video
+  -s, --stop_remove_file
+                        not delete Dup file: dups.txt
+  --dry                 dry run (without deleting)
+  -t THRESHOLD, --threshold THRESHOLD
+                        threshold image similarity (100 means if exact the
+                        same)
+#+end_src
+
+example
+
+#+begin_src bash
+python vid2pngAndDeleteDuplicates.py -p myVideo.mp4
+#+end_src
+
+without video
+
+#+begin_src bash
+python vid2pngAndDeleteDuplicates -w -P PATH_OF_PICTURES
+#+end_src

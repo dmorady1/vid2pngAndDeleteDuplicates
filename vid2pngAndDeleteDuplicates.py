@@ -41,6 +41,9 @@ print("DryRun:", config.dry)
 print("Threshhold:", config.threshold)
 print("without_video:", config.without_video)
 
+if config.without_video:
+    print("using path:", config.path_of_pictures)
+    print("If you want to change use: -P PathToPictures ")
 picture_path = config.path_of_pictures
 
 count = 1
