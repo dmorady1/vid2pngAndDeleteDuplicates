@@ -10,7 +10,10 @@ import time
 
 dupsFile = "dups.txt"
 
-parser = argparse.ArgumentParser(prog="./vid2pngAndDeleteDuplicates.py")
+parser = argparse.ArgumentParser(
+    prog="./vid2pngAndDeleteDuplicates.py",
+    formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+)
 
 parser.add_argument("-p", "--path", metavar="pathOfVid", type=str, default=None)
 parser.add_argument("-P", "--path_of_pictures", type=str, default="pictures")
