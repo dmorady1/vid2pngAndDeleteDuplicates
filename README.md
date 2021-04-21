@@ -13,7 +13,7 @@ Creates pictures of a video file and delete duplicate in these pictures.
 Can also be used for pictures
 only with option `-w` make sure to use the `-P` option to give the correct path to your files.
 
-Default value for `Threshold` for similarity is 95. (100 would mean exact the same pictures)
+Default value for `Threshold` for similarity is `95`. (100 would mean exact the same pictures)
 
 Threshold can be changed with `-t` option.
 
