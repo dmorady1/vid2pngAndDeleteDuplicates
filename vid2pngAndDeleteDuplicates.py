@@ -5,8 +5,21 @@ import subprocess
 import re
 import argparse
 import time
+import shutil
+
 
 # REQUIRES findimagedupes
+
+
+def does_executable_exist(executable_name):
+    if shutil.which(executable_name) is None:
+        print(f"Seems like you did not install {executable_name}")
+        print(f"Please make sure to install {executable_name}")
+        exit()
+
+
+does_executable_exist("findimagedupes")
+does_executable_exist("ffmpeg")
 
 dupsFile = "dups.txt"
 
@@ -16,7 +29,7 @@ parser = argparse.ArgumentParser(
 )
 
 parser.add_argument("-p", "--path", metavar="PATH_OF_VIDEO", type=str, default=None)
-parser.add_argument("-P", "--path_of_pictures", type=str, default="pictures")
+parser.add_argument("-P", "--path_of_pictures", type=str, default=None)
 parser.add_argument("-w", "--without_video", action="store_true")
 parser.add_argument(
     "-s",
@@ -38,21 +51,32 @@ if config.path is None and not config.without_video:
     print("Error: Please provide path using the -p option")
     exit()
 
+if config.without_video and config.path_of_pictures is None:
+    print(
+        "Yo used -w option, so without_video with this option you have to give the path of the pictures"
+    )
+    print("Error: Please provide path of pictures the -P option")
+    exit()
+
 print("path to vid:", config.path)
 print("keep dupes file:", config.stop_remove_file)
 print("DryRun:", config.dry)
 print("Threshhold:", config.threshold)
 print("without_video:", config.without_video)
 
+picture_path = ""
+if config.path is not None:
+    picture_path = os.path.dirname(config.path) + "/pictures"
+
 if config.without_video:
     print("using path:", config.path_of_pictures)
     print("If you want to change use: -P PathToPictures ")
-picture_path = config.path_of_pictures
+    picture_path = config.path_of_pictures
 
 count = 1
 while os.path.isdir(picture_path):
     count += 1
-    picture_path = "pictures" + str(count)
+    picture_path = os.path.dirname(str(picture_path)) + "/pictures" + str(count)
 print("Picture path is:", picture_path)
 subprocess.run(f"mkdir {picture_path}", shell=True)
 
@@ -108,7 +132,7 @@ def delete_all_but_largest_and_newest(filepaths):
 
 
 with open(dupsFile, "r") as fp:
-    for cnt, line in enumerate(fp):
+    for line in fp:
         matches = re.findall("(?:(.*?(?:jpg|jpeg|png|gif))[\s]{0,1})+?", line)
         delete_all_but_largest_and_newest(matches)
 
