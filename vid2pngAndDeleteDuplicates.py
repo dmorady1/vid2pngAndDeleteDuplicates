@@ -68,22 +68,32 @@ picture_path = ""
 if config.path is not None:
     picture_path = os.path.dirname(config.path) + "/pictures"
 
-if config.without_video:
+if config.path_of_pictures is not None:
+    if not os.path.isdir(config.path_of_pictures):
+        print(
+            "the path of the pictures directory does not exist, it will be created for you"
+        )
+        subprocess.run(f"mkdir {config.path_of_pictures}", shell=True)
     print("using path:", config.path_of_pictures)
     print("If you want to change use: -P PathToPictures ")
     picture_path = config.path_of_pictures
 
-count = 1
-while os.path.isdir(picture_path):
-    count += 1
-    picture_path = os.path.dirname(str(picture_path)) + "/pictures" + str(count)
-print("Picture path is:", picture_path)
-subprocess.run(f"mkdir {picture_path}", shell=True)
+if not config.without_video and config.path_of_pictures is None:
+    count = 1
+    while os.path.isdir(picture_path):
+        count += 1
+        picture_path = os.path.dirname(str(picture_path)) + "/pictures" + str(count)
+    print("Picture path is:", picture_path)
+    subprocess.run(f"mkdir {picture_path}", shell=True)
 
 count = len(next(os.walk(picture_path))[2])
 
 if not config.without_video:
     print("start ffmpeg")
+    if config.path is not None and not os.path.isfile(config.path):
+        print(f"File does not exist with path: {config.path}")
+        exit()
+
     if config.path is not None:
         p = subprocess.Popen(
             f"ffmpeg -nostdin -loglevel error -threads 1 -skip_frame nokey -i {config.path}  -vsync 0 -r 30 -f image2 {picture_path}/%02d.png",

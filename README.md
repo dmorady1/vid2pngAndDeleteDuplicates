@@ -17,13 +17,17 @@ Default value for `Threshold` for similarity is `95`. (100 would mean exact the 
 
 Threshold can be changed with `-t` option.
 
+Default creates a directory in the same directory of the video file with the name `pictures` if `pictures` already exist it will count up `pictures2` if `pictures2` exist then `pictures3` and so on.
+Can be changed with `-P` option
+
 <a id="org0c6d865"></a>
 
 # Requirements
+
 - findimagedupes (https://github.com/jhnc/findimagedupes)
 - python
 - ffmpeg
-    
+
 <a id="org35ea0c1"></a>
 
 # examples
@@ -41,6 +45,7 @@ with threshold
     python vid2pngAndDeleteDuplicates.py -p myVideo.mp4 -t 90
 
 help function
+
 ```
 usage: ./vid2pngAndDeleteDuplicates.py [-h] [-p PATH_OF_VIDEO] [-P PATH_OF_PICTURES] [-w] [-s] [--dry] [-t THRESHOLD]
 
@@ -54,4 +59,4 @@ optional arguments:
   --dry                 dry run (without deleting) (default: False)
   -t THRESHOLD, --threshold THRESHOLD
                         threshold image similarity (100 means if exact the same) (default: 95)
- ```
+```
