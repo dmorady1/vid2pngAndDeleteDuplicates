@@ -15,7 +15,7 @@ parser = argparse.ArgumentParser(
     formatter_class=argparse.ArgumentDefaultsHelpFormatter,
 )
 
-parser.add_argument("-p", "--path", metavar="pathOfVid", type=str, default=None)
+parser.add_argument("-p", "--path", metavar="PATH_OF_VIDEO", type=str, default=None)
 parser.add_argument("-P", "--path_of_pictures", type=str, default="pictures")
 parser.add_argument("-w", "--without_video", action="store_true")
 parser.add_argument(
