@@ -41,19 +41,17 @@ with threshold
     python vid2pngAndDeleteDuplicates.py -p myVideo.mp4 -t 90
 
 help function
+```
+usage: ./vid2pngAndDeleteDuplicates.py [-h] [-p pathOfVid] [-P PATH_OF_PICTURES] [-w] [-s] [--dry] [-t THRESHOLD]
 
-    usage: ./vid2pngAndDeleteDuplicates.py [-h] [-p pathOfVid]
-                                           [-P PATH_OF_PICTURES] [-w] [-s] [--dry]
-                                           [-t THRESHOLD]
-
-    optional arguments:
-      -h, --help            show this help message and exit
-      -p pathOfVid, --path pathOfVid
-      -P PATH_OF_PICTURES, --path_of_pictures PATH_OF_PICTURES
-      -w, --without_video
-      -s, --stop_remove_file
-                            not delete Dup file: dups.txt
-      --dry                 dry run (without deleting)
-      -t THRESHOLD, --threshold THRESHOLD
-                            threshold image similarity (100 means if exact the
-                            same)
+optional arguments:
+  -h, --help            show this help message and exit
+  -p pathOfVid, --path pathOfVid
+  -P PATH_OF_PICTURES, --path_of_pictures PATH_OF_PICTURES
+  -w, --without_video
+  -s, --stop_remove_file
+                        not delete Dup file: dups.txt (default: False)
+  --dry                 dry run (without deleting) (default: False)
+  -t THRESHOLD, --threshold THRESHOLD
+                        threshold image similarity (100 means if exact the same) (default: 95)
+ ```
