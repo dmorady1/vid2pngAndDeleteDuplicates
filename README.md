@@ -42,11 +42,11 @@ with threshold
 
 help function
 ```
-usage: ./vid2pngAndDeleteDuplicates.py [-h] [-p pathOfVid] [-P PATH_OF_PICTURES] [-w] [-s] [--dry] [-t THRESHOLD]
+usage: ./vid2pngAndDeleteDuplicates.py [-h] [-p PATH_OF_VIDEO] [-P PATH_OF_PICTURES] [-w] [-s] [--dry] [-t THRESHOLD]
 
 optional arguments:
   -h, --help            show this help message and exit
-  -p pathOfVid, --path pathOfVid
+  -p PATH_OF_VIDEO, --path PATH_OF_VIDEO
   -P PATH_OF_PICTURES, --path_of_pictures PATH_OF_PICTURES
   -w, --without_video
   -s, --stop_remove_file
