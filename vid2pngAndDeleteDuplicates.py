@@ -2,13 +2,13 @@
 
 import os
 import subprocess
-import re
 import argparse
 import time
 import shutil
+import tempfile
 
 
-# REQUIRES findimagedupes
+# REQUIRES findimagedupes, ffmpeg
 
 
 def does_executable_exist(executable_name):
@@ -21,7 +21,6 @@ def does_executable_exist(executable_name):
 does_executable_exist("findimagedupes")
 does_executable_exist("ffmpeg")
 
-dupsFile = "dups.txt"
 
 parser = argparse.ArgumentParser(
     prog="./vid2pngAndDeleteDuplicates.py",
@@ -58,6 +57,10 @@ if config.without_video and config.path_of_pictures is None:
     print("Error: Please provide path of pictures the -P option")
     exit()
 
+tmp_dir = tempfile.mkdtemp()
+dups_file = os.path.join(tmp_dir, "dups.txt")
+print("tmpfile", dups_file)
+
 print("path to vid:", config.path)
 print("keep dupes file:", config.stop_remove_file)
 print("DryRun:", config.dry)
@@ -66,14 +69,14 @@ print("without_video:", config.without_video)
 
 picture_path = ""
 if config.path is not None:
-    picture_path = os.path.dirname(config.path) + "/pictures"
+    picture_path = os.path.join(os.path.dirname(config.path), "pictures")
 
 if config.path_of_pictures is not None:
     if not os.path.isdir(config.path_of_pictures):
         print(
             "the path of the pictures directory does not exist, it will be created for you"
         )
-        subprocess.run(f"mkdir {config.path_of_pictures}", shell=True)
+        os.makedirs(config.path_of_pictures)
     print("using path:", config.path_of_pictures)
     print("If you want to change use: -P PathToPictures ")
     picture_path = config.path_of_pictures
@@ -82,9 +85,11 @@ if not config.without_video and config.path_of_pictures is None:
     count = 1
     while os.path.isdir(picture_path):
         count += 1
-        picture_path = os.path.dirname(str(picture_path)) + "/pictures" + str(count)
+        picture_path = os.path.join(
+            os.path.dirname(config.path), "pictures" + str(count)
+        )
     print("Picture path is:", picture_path)
-    subprocess.run(f"mkdir {picture_path}", shell=True)
+    os.makedirs(picture_path)
 
 count = len(next(os.walk(picture_path))[2])
 
@@ -111,7 +116,7 @@ if not config.without_video:
 
 print("start findimagedupes")
 subprocess.run(
-    f'findimagedupes -t {config.threshold} -R "{picture_path}" > "{dupsFile}"',
+    f'findimagedupes -t {config.threshold} -R "{picture_path}" > "{dups_file}"',
     shell=True,
 )
 
@@ -133,21 +138,20 @@ def delete_all_but_largest_and_newest(filepaths):
 
     similarFiles.remove(newestFile)
 
-    if config.dry:
-        print(smallerFiles + similarFiles)
-
     if not config.dry:
         list(map(os.remove, smallerFiles + similarFiles))
-        print("Removed: ", len(smallerFiles + similarFiles))
+
+    return len(smallerFiles + similarFiles)
 
 
-with open(dupsFile, "r") as fp:
+del_count = 0
+with open(dups_file, "r") as fp:
     for line in fp:
-        matches = re.findall("(?:(.*?(?:jpg|jpeg|png|gif))[\s]{0,1})+?", line)
-        delete_all_but_largest_and_newest(matches)
+        del_count += delete_all_but_largest_and_newest(line.split())
 
-new_count = len(next(os.walk(picture_path))[2])
-print(f"{count - new_count} images were removed from {count}")
 
-if not config.stop_remove_file:
-    os.remove(dupsFile)
+print(f"{del_count} images were removed from {count}")
+
+if config.stop_remove_file:
+    shutil.move(dups_file, os.getcwd() + "/" + "dups.txt")
+shutil.rmtree(tmp_dir)
