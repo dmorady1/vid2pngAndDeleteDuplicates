@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import os
+import re
 import subprocess
 import argparse
 import time
@@ -147,7 +148,8 @@ def delete_all_but_largest_and_newest(filepaths):
 del_count = 0
 with open(dups_file, "r") as fp:
     for line in fp:
-        del_count += delete_all_but_largest_and_newest(line.split())
+        matches = re.findall("(?:(.*?(?:jpg|jpeg|png|gif))[\s]{0,1})+?", line)
+        del_count += delete_all_but_largest_and_newest(matches)
 
 
 print(f"{del_count} images were removed from {count}")
